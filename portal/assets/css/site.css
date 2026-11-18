@@ -60,7 +60,9 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 32px;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-block: 12px;
 }
 
 .brand {
@@ -73,8 +75,35 @@ a {
 
 nav {
     display: flex;
-    gap: 24px;
+    gap: 18px;
 }
+
+.language-switcher { display: flex; gap: 6px; }
+.language-switcher[hidden] { display: none; }
+.language-switcher button {
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+}
+.language-switcher button[aria-pressed="true"] {
+    background: var(--surface-dark);
+    color: white;
+    border-color: var(--surface-dark);
+}
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.skip-link { position: fixed; left: 12px; top: -100px; z-index: 20; padding: 12px; background: white; }
+.skip-link:focus { top: 12px; }
+section { scroll-margin-top: 120px; }
+.brand-credit { margin-top: 24px; font-weight: 600; }
+.review-note, .translation-note { font-size: 0.9rem; }
+.review-note { margin-top: 16px; }
+.resource-links { display: flex; flex-wrap: wrap; gap: 20px 32px; padding-left: 20px; }
+footer a { display: inline-block; margin-top: 12px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 nav a {
     color: var(--text-muted);

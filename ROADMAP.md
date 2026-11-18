@@ -42,11 +42,20 @@ Validated Project Updates can be transformed automatically into timeline data fo
 
 The first public HIEP project portal is operational and presents the generated project timeline through a lightweight HTML, CSS, and JavaScript frontend.
 
-### Automated publication
+### Publication infrastructure
 
-GitHub Actions validates the project, generates portal data, builds the GitHub Pages artifact, and deploys the public portal from the `main` branch.
+The build/package/deploy workflow is implemented, but remains disabled manually as of 18 November 2026. PR #9 added technical CI checks; their GitHub runtime has not yet been successfully demonstrated. Ordinary pushes and PRs validate only when the workflow is enabled. Packaging and deployment require explicit manual dispatch with deploy=true on main and successful prerequisite jobs; this is not publication clearance. The public site remains reachable from the last successful deployment on 23 September 2026.
+
+### Organization migration and reviewed baseline
+
+The repository is owned by Infinigate Nederland under Infinigate-Netherlands/HIEP. Metadata/bootstrap corrections, CI separation, additional technical checks and README modernization have been merged into public main. Implementation is separate from formal acceptance and publication authorization.
 
 ## Current focus
+
+### Controlled validation and portal review
+
+Review the bilingual portal candidate and prepare a controlled handover. CI activation and a validation-only run with deploy=false require separate authorization. Public timeline data still reflects the nine existing Project Updates through 22 September 2026. Later milestones need separately authorized source updates; regeneration alone does not create history.
+
 
 ### Public project content
 
@@ -99,6 +108,10 @@ Further develop project governance, contribution guidance, review processes, and
 ### Documentation automation
 
 Continue improving repository-driven validation, generation, navigation, and publication where automation provides repeatable value without introducing unnecessary complexity.
+
+### Local instances and AI integration
+
+Local/private distribution, synchronization and live AI/MCP integration are planned capabilities, not operational services. Keep private organizational content outside public upstream and generated artifacts. Publication eligibility enforcement and release/distribution terms require separate decisions; Draft proposals are not approved policy.
 
 ## Roadmap maintenance
 

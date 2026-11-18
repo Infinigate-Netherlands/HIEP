@@ -3,252 +3,128 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Healthcare Identity Eco Platform - an open platform for healthcare identity architecture, standards, and implementation guidance.">
-
+    <meta name="description" data-i18n-content="page.description" content="An open project for healthcare identity architecture, standards and knowledge sharing.">
     <title>HIEP | Healthcare Identity Eco Platform</title>
-
     <link rel="stylesheet" href="assets/css/site.css">
+    <script src="assets/js/site.js" defer></script>
 </head>
 <body>
+    <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
     <header class="site-header">
         <div class="container">
             <a class="brand" href="./">HIEP</a>
-
-            <nav aria-label="Main navigation">
-                <a href="#about">About</a>
-                <a href="#status">Status</a>
-                <a href="#updates">Updates</a>
-                <a href="#roadmap">Roadmap</a>
-                <a href="#documentation">Documentation</a>
+            <nav aria-label="Main navigation" data-i18n-aria="nav.label">
+                <a data-i18n="nav.about" href="#about">About</a>
+                <a data-i18n="nav.status" href="#status">Status</a>
+                <a data-i18n="nav.updates" href="#updates">Updates</a>
+                <a data-i18n="nav.roadmap" href="#roadmap">Roadmap</a>
+                <a data-i18n="nav.resources" href="#documentation">Resources</a>
             </nav>
+            <div class="language-switcher" role="group" aria-label="Language" data-i18n-aria="language.label" hidden>
+                <button type="button" data-language="nl" lang="nl" aria-pressed="false">Nederlands (NL)</button>
+                <button type="button" data-language="en" lang="en" aria-pressed="true">English (EN)</button>
+            </div>
         </div>
     </header>
-
-    <main>
+    <main id="main" tabindex="-1">
         <section class="hero" id="about">
             <div class="container">
                 <p class="eyebrow">Healthcare Identity Eco Platform</p>
-
-                <h1>Identity architecture for modern healthcare.</h1>
-
-                <p class="lead">
-                    HIEP is an open project for developing practical identity
-                    architecture, standards, guidance, and reusable building
-                    blocks for healthcare environments.
-                </p>
-
+                <h1 data-i18n="hero.title">Identity architecture for modern healthcare.</h1>
+                <p data-i18n="hero.intro" class="lead">HIEP is an open project for practical identity architecture, standards, guidance and reusable building blocks for healthcare.</p>
+                <p data-i18n="brand.line" class="brand-credit">Initiated and powered by Infinigate Netherlands</p>
                 <div class="actions">
-                    <a class="button primary" href="#updates">Project updates</a>
-                    <a class="button secondary" href="#documentation">Explore project</a>
+                <a data-i18n="hero.updates" class="button primary" href="#updates">Project updates</a>
+                <a data-i18n="hero.resources" class="button secondary" href="#documentation">Explore the project</a>
                 </div>
             </div>
         </section>
-
         <section id="status">
             <div class="container">
-                <p class="section-label">Project status</p>
-                <h2>Technical foundation operational</h2>
-
-                <p>
-                    HIEP is under active development. The repository,
-                    documentation framework, Project Update system,
-                    validation tooling, automated timeline, public portal,
-                    and deployment pipeline are operational.
-                </p>
-
-                <p>
-                    The current focus is expanding the public project content,
-                    portal information architecture, architecture documentation,
-                    and security documentation.
-                </p>
-            </div>
-        </section>
-
-        <section id="updates">
-            <div class="container">
-                <p class="section-label">Project timeline</p>
-                <h2>Latest updates</h2>
-
-                <div id="timeline">
-                    <p>Loading project updates...</p>
+                <p data-i18n="status.label" class="section-label">Project status</p>
+                <h2 data-i18n="status.title">A working foundation. Further work ahead.</h2>
+                <p data-i18n="status.intro">The repository, tooling foundation, Project Update framework, timeline generation and public portal infrastructure are implemented. The repository has moved to the Infinigate Netherlands GitHub Organization.</p>
+                <p data-i18n="status.deployment">Checked 18 November 2026: the Pages workflow is disabled manually. The site remains reachable; the last successful deployment was 23 September 2026. New CI execution has not yet been demonstrated.</p>
+                <p data-i18n="status.note">Implementation is separate from formal acceptance. No completion percentage or v1.0 release approval is claimed.</p>
+                <div class="cards">
+                    <article>
+                <h3 data-i18n="state.complete">Completed</h3>
+                <p data-i18n="status.complete">Organization migration, metadata and bootstrap corrections, CI separation and the public README baseline are complete; CI runtime remains unverified.</p>
+                    </article>
+                    <article>
+                <h3 data-i18n="state.progress">In progress</h3>
+                <p data-i18n="status.progress">Bilingual portal review and controlled handover preparation.</p>
+                    </article>
+                    <article>
+                <h3 data-i18n="state.planned">Planned</h3>
+                <p data-i18n="status.planned">Controlled CI validation, contributor guidance and reference integration documentation; local/private distribution and live AI/MCP integrations remain planned.</p>
+                    </article>
+                    <article>
+                <h3 data-i18n="state.approval">Awaiting approval</h3>
+                <p data-i18n="status.approval">Publication policy and release-scope decisions remain pending; Draft material is not approved policy.</p>
+                    </article>
                 </div>
             </div>
         </section>
-
+        <section id="updates">
+            <div class="container">
+                <p data-i18n="timeline.label" class="section-label">Project timeline</p>
+                <h2 data-i18n="timeline.title">Published project history</h2>
+                <p data-i18n="timeline.note">The timeline reflects nine existing source updates through 22 September 2026. Later merged work has no corresponding Project Update yet. Translations do not change historical source records.</p>
+                <div id="timeline" aria-live="polite" aria-busy="true">
+                <p data-i18n="timeline.loading">Loading project updates…</p>
+                </div>
+            </div>
+        </section>
         <section id="roadmap">
             <div class="container">
-                <p class="section-label">Roadmap</p>
-                <h2>Where HIEP is going</h2>
-
+                <p data-i18n="roadmap.label" class="section-label">Roadmap</p>
+                <h2 data-i18n="roadmap.title">Next steps, with explicit decision points</h2>
                 <ol class="roadmap">
-                    <li class="completed">Repository and project foundation</li>
-                    <li class="completed">Documentation framework</li>
-                    <li class="completed">Project Update framework</li>
-                    <li class="completed">Automated project timeline</li>
-                    <li class="completed">Public project portal</li>
-                    <li class="completed">Automated publication</li>
-                    <li class="current">Public project content and navigation</li>
-                    <li>Architecture and security documentation</li>
-                    <li>Business, vendor, integration, and enablement content</li>
-                    <li>Governance and collaboration</li>
+                    <li><strong data-i18n="state.complete">Completed</strong><p data-i18n="roadmap.complete">Repository migration, tooling, update framework and portal infrastructure.</p></li>
+                    <li><strong data-i18n="state.progress">In progress</strong><p data-i18n="roadmap.progress">Validate the merged CI configuration separately and review bilingual portal content before publication.</p></li>
+                    <li><strong data-i18n="state.planned">Planned</strong><p data-i18n="roadmap.planned">Improve reference guidance and documentation; authorize any new Project Updates separately.</p></li>
+                    <li><strong data-i18n="state.approval">Awaiting approval</strong><p data-i18n="roadmap.approval">Establish delegated authority and publication eligibility before enforcing governance gates.</p></li>
                 </ol>
             </div>
         </section>
-
         <section id="architecture-security">
             <div class="container">
-                <p class="section-label">Architecture &amp; security</p>
-                <h2>Principles first, documentation next</h2>
-
-                <p class="section-intro">
-                    HIEP is being developed from explicit architecture and
-                    security principles. The principles are available today;
-                    detailed architecture and security documentation is the
-                    current next step.
-                </p>
-
-                <div class="cards">
-                    <article>
-                        <p class="resource-status available">Available</p>
-                        <h3>Architecture principles</h3>
-                        <p>
-                            Fifteen principles guide HIEP across identity,
-                            explicit verification, least privilege, lifecycle,
-                            trust, resilience, observability, and data protection.
-                        </p>
-                        <p>
-                            <a href="https://github.com/scorpido74/HIEP/blob/main/standards/Architecture-Principles.md">
-                                View architecture principles
-                            </a>
-                        </p>
-                    </article>
-
-                    <article>
-                        <p class="resource-status development">In development</p>
-                        <h3>Architecture documentation</h3>
-                        <p>
-                            Detailed HIEP architecture documentation will
-                            describe context, requirements, logical and physical
-                            architecture, trust relationships, resilience,
-                            observability, and architectural decisions.
-                        </p>
-                    </article>
-
-                    <article>
-                        <p class="resource-status available">Available</p>
-                        <h3>Security principles</h3>
-                        <p>
-                            Security is embedded in the current architecture
-                            principles through explicit verification, least
-                            privilege, phishing-resistant authentication,
-                            minimal trust, failure handling, and auditability.
-                        </p>
-                        <p>
-                            <a href="https://github.com/scorpido74/HIEP/blob/main/standards/Architecture-Principles.md">
-                                Explore security principles
-                            </a>
-                        </p>
-                    </article>
-
-                    <article>
-                        <p class="resource-status development">In development</p>
-                        <h3>Security documentation</h3>
-                        <p>
-                            Dedicated security documentation will cover security
-                            objectives, assets, trust boundaries, threats,
-                            controls, authentication, authorization, identity
-                            lifecycle, audit, resilience, and residual risks.
-                        </p>
-                    </article>
-                </div>
+                <p data-i18n="architecture.label" class="section-label">Architecture and security</p>
+                <h2 data-i18n="architecture.title">Principles guide the work</h2>
+                <p data-i18n="architecture.intro" class="section-intro">Existing architecture principles address identity, explicit verification, least privilege, trust, resilience and data protection. Detailed designs require their own review; Draft material is not approved policy.</p>
+                <a data-i18n="architecture.link" href="https://github.com/Infinigate-Netherlands/HIEP/blob/main/standards/Architecture-Principles.md">Read the architecture principles</a>
             </div>
         </section>
-
+        <section id="infinigate">
+            <div class="container">
+                <p data-i18n="brand.label" class="section-label">Collaboration</p>
+                <h2 data-i18n="brand.title">Why Infinigate supports HIEP</h2>
+                <p data-i18n="brand.intro">Secure digital identity helps healthcare organizations work together. Infinigate supports HIEP as a place to share knowledge and develop reusable architectures and standards.</p>
+                <p data-i18n="brand.collaboration">The aim is vendor-neutral collaboration on interoperability between healthcare organizations, government and technology partners.</p>
+                <p data-i18n="brand.scope">HIEP is a collaborative knowledge project, not a commercial Infinigate product. Published material should be assessed for its stated scope and maturity.</p>
+            </div>
+        </section>
         <section id="documentation">
             <div class="container">
-                <p class="section-label">Project resources</p>
-                <h2>Explore HIEP</h2>
-
-                <p>
-                    HIEP is developed openly in the project repository.
-                    Explore the current roadmap, architecture principles,
-                    project standards, and development history.
-                </p>
-
-                <div class="cards">
-                    <article>
-                        <h3>Roadmap</h3>
-                        <p>
-                            See what HIEP has completed, what is currently
-                            being developed, and the planned project direction.
-                        </p>
-                        <p>
-                            <a href="https://github.com/scorpido74/HIEP/blob/main/ROADMAP.md">
-                                View roadmap
-                            </a>
-                        </p>
-                    </article>
-
-                    <article>
-                        <h3>Architecture principles</h3>
-                        <p>
-                            Explore the principles that guide HIEP identity,
-                            security, trust, resilience, and architecture decisions.
-                        </p>
-                        <p>
-                            <a href="https://github.com/scorpido74/HIEP/blob/main/standards/Architecture-Principles.md">
-                                View architecture principles
-                            </a>
-                        </p>
-                    </article>
-
-                    <article>
-                        <h3>Project standards</h3>
-                        <p>
-                            Review the standards used for HIEP documentation,
-                            lifecycle management, automation, and Project Updates.
-                        </p>
-                        <p>
-                            <a href="https://github.com/scorpido74/HIEP/tree/main/standards">
-                                Explore standards
-                            </a>
-                        </p>
-                    </article>
-
-                    <article>
-                        <h3>Project history</h3>
-                        <p>
-                            Follow the generated timeline of structured Project
-                            Updates and the development history of HIEP.
-                        </p>
-                        <p>
-                            <a href="#updates">View project updates</a>
-                        </p>
-                    </article>
-                </div>
+                <p data-i18n="resources.label" class="section-label">Project resources</p>
+                <h2 data-i18n="resources.title">Explore HIEP</h2>
+                <ul class="resource-links">
+                    <li><a data-i18n="resources.repo" href="https://github.com/Infinigate-Netherlands/HIEP">Source repository</a></li>
+                    <li><a data-i18n="resources.roadmap" href="https://github.com/Infinigate-Netherlands/HIEP/blob/main/ROADMAP.md">Read the roadmap</a></li>
+                    <li><a data-i18n="resources.standards" href="https://github.com/Infinigate-Netherlands/HIEP/tree/main/standards">Explore project standards</a></li>
+                </ul>
             </div>
         </section>
     </main>
-
     <footer>
-        <div class="container footer-content">
+        <div class="container">
             <p>Healthcare Identity Eco Platform</p>
-
-            <div class="powered-by">
-                <span>Powered by</span>
-                <a href="https://www.infinigate.com/nl/"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    <img
-                        src="assets/images/infinigate-logo.webp"
-                        alt="Infinigate"
-                        class="powered-by-logo"
-                    >
-                </a>
-            </div>
+                <p data-i18n="brand.line">Initiated and powered by Infinigate Netherlands</p>
+                <a data-i18n="footer.visit" href="https://www.infinigate.com/nl/">Visit Infinigate Netherlands</a>
+                <p data-i18n="review.note" class="review-note">Proposed portal content — publication review pending.</p>
         </div>
     </footer>
-
-    <script src="assets/js/site.js"></script>
+    <noscript><p class="container">JavaScript enables language switching and the project timeline. The English overview remains available without it.</p></noscript>
 </body>
 </html>
