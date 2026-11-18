@@ -29,6 +29,45 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Run workflow regression tests
+        shell: pwsh
+        run: |
+          node --test tests/workflow.Tests.cjs
+          if ($LASTEXITCODE -ne 0) {
+              throw 'Workflow regression tests failed.'
+          }
+
+      - name: Check JavaScript syntax
+        shell: pwsh
+        run: |
+          $Files = @(Get-ChildItem portal,tests -Recurse -File | Where-Object Extension -in '.js', '.cjs', '.mjs')
+          if ($Files.Count -eq 0) { throw 'No JavaScript files found.' }
+          foreach ($File in $Files) {
+              node --check $File.FullName
+              if ($LASTEXITCODE -ne 0) {
+                  throw "JavaScript syntax validation failed: $($File.FullName)"
+              }
+          }
+
+      - name: Check PowerShell syntax
+        shell: pwsh
+        run: |
+          $Files = @(Get-ChildItem src,build,tests -Recurse -File | Where-Object Extension -in '.ps1', '.psm1', '.psd1')
+          if ($Files.Count -eq 0) { throw 'No PowerShell files found.' }
+          $ErrorCount = 0
+          foreach ($File in $Files) {
+              $Tokens = $null
+              $ParseErrors = $null
+              $null = [System.Management.Automation.Language.Parser]::ParseFile($File.FullName, [ref]$Tokens, [ref]$ParseErrors)
+              foreach ($ParseError in $ParseErrors) {
+                  Write-Output "$($File.FullName): $ParseError"
+                  $ErrorCount++
+              }
+          }
+          if ($ErrorCount -gt 0) {
+              throw "PowerShell syntax validation failed: $ErrorCount error(s)."
+          }
+
       - name: Validate Project Updates
         shell: pwsh
         run: |
