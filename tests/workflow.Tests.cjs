@@ -93,9 +93,9 @@ test('failed, cancelled or skipped validation blocks packaging and deployment', 
 
 test('packaging uses the validated revision and preserves timeline generation', () => {
     assert.match(jobs.package, /ref: \$\{\{ github.sha \}\}/);
-    assert.equal(runBlocks('build').length, 2);
+    assert.equal(runBlocks('build').length, 5);
     assert.equal(runBlocks('package').length, 1);
-    assert.equal(runBlocks('build')[1], runBlocks('package')[0]);
+    assert.equal(runBlocks('build')[4], runBlocks('package')[0]);
     assert.match(jobs.package, /uses: actions\/upload-pages-artifact@v3/);
     assert.match(jobs.package, /path: portal/);
     assert.match(jobs.deploy, /name: github-pages/);
@@ -106,4 +106,53 @@ test('packaging uses the validated revision and preserves timeline generation', 
 test('dispatch is explicitly described as separate from publication authorization', () => {
     assert.match(source, /requires separate publication authorization/);
     assert.match(source, /do not grant clearance/);
+});
+
+test('build includes mandatory technical checks with explicit failure handling', () => {
+    const blocks = runBlocks('build');
+    assert.equal(blocks.length, 5);
+    assert.match(jobs.build, /name: Run workflow regression tests/);
+    assert.match(jobs.build, /name: Check JavaScript syntax/);
+    assert.match(jobs.build, /name: Check PowerShell syntax/);
+    assert.match(blocks[0], /node --test tests\/workflow.Tests.cjs/);
+    assert.match(blocks[0], /\$LASTEXITCODE -ne 0/);
+    assert.match(blocks[1], /node --check \$File.FullName/);
+    assert.match(blocks[1], /\$LASTEXITCODE -ne 0/);
+    assert.match(blocks[2], /Parser\]::ParseFile/);
+    assert.match(blocks[2], /if \(\$ErrorCount -gt 0\)/);
+    for (const block of blocks.slice(0, 3)) assert.match(block, /throw /);
+    assert.doesNotMatch(jobs.build, /Test-HIEPDocument|Invoke-Pester|continue-on-error|upload-artifact|upload-pages-artifact/);
+});
+
+const { spawnSync } = require('node:child_process');
+const powershell = process.env.HIEP_TEST_PWSH || 'pwsh';
+function executeCheck(prelude, block) {
+    const result = spawnSync(powershell, ['-NoProfile', '-NonInteractive', '-Command', "$ErrorActionPreference = 'Stop'; " + prelude + '\n' + block], { encoding: 'utf8' });
+    assert.ifError(result.error);
+    assert.notEqual(result.status, null, result.stderr);
+    return result;
+}
+
+test('native test and syntax failures produce nonzero exit codes', () => {
+    const blocks = runBlocks('build');
+    const mockNode = 'function node { $global:LASTEXITCODE = 17 }; ';
+    const mockFiles = "function Get-ChildItem { [pscustomobject]@{ Extension = '.js'; FullName = 'synthetic.js' } }; ";
+    for (const [prelude, block] of [[mockNode, blocks[0]], [mockNode + mockFiles, blocks[1]]]) {
+        const result = executeCheck(prelude, block);
+        assert.notEqual(result.status, 0);
+        assert.match(result.stderr, /failed/);
+    }
+});
+
+test('PowerShell parse errors and empty file discovery fail closed', () => {
+    const block = runBlocks('build')[2];
+    const mockFiles = "function Get-ChildItem { [pscustomobject]@{ Extension = '.ps1'; FullName = 'nonexistent-synthetic-file.ps1' } }; ";
+    const result = executeCheck(mockFiles, block);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /PowerShell syntax validation failed/);
+    for (const check of runBlocks('build').slice(1, 3)) {
+        const empty = executeCheck('function Get-ChildItem { }; ', check);
+        assert.notEqual(empty.status, 0);
+        assert.match(empty.stderr, /No .* files found/);
+    }
 });
