@@ -14,6 +14,7 @@
     FunctionsToExport = @(
         'Get-HIEPDocumentMetadata',
         'Get-HIEPDocumentId',
+        'Test-HIEPDocument',
         'Get-HIEPProjectUpdate',
         'Get-HIEPProjectUpdateId',
         'New-HIEPProjectUpdate',

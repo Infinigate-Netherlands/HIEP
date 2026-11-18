@@ -11,14 +11,23 @@
 
     PowerShellVersion = '7.4'
 
-    FunctionsToExport = @()
+    FunctionsToExport = @(
+        'Get-HIEPDocumentMetadata',
+        'Get-HIEPDocumentId',
+        'Test-HIEPDocument',
+        'Get-HIEPProjectUpdate',
+        'Get-HIEPProjectUpdateId',
+        'New-HIEPProjectUpdate',
+        'New-HIEPProjectTimeline',
+        'Test-HIEPProjectUpdate'
+    )
     CmdletsToExport   = @()
     VariablesToExport = @()
     AliasesToExport   = @()
 
-    PrivateData = @{
+    PrivateData       = @{
         PSData = @{
-            Tags = @(
+            Tags       = @(
                 'HIEP',
                 'Healthcare',
                 'Identity',
