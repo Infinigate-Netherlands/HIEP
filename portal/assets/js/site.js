@@ -38,8 +38,9 @@ const translations = {
         "status.approval": "Publication policy and release-scope decisions remain pending; Draft material is not approved policy.",
         "timeline.label": "Project timeline",
         "timeline.title": "Published project history",
-        "timeline.note": "The timeline reflects nine existing source updates through 22 September 2026. Later merged work has no corresponding Project Update yet. Translations do not change historical source records.",
+        "timeline.note": "Project Updates document recorded milestones. Translations do not change historical source records.",
         "timeline.loading": "Loading project updates…",
+        "timeline.count": "Loaded {count} project updates.",
         "timeline.empty": "No project updates are available yet.",
         "timeline.error": "Project timeline is currently unavailable.",
         "timeline.source": "This update is shown in its original English; a Dutch translation is not yet available.",
@@ -99,8 +100,9 @@ const translations = {
         "status.approval": "Besluiten over publicatiebeleid en releasescope staan nog open; conceptmateriaal is geen goedgekeurd beleid.",
         "timeline.label": "Projecttijdlijn",
         "timeline.title": "Gepubliceerde projectgeschiedenis",
-        "timeline.note": "De tijdlijn toont negen bestaande bronupdates tot en met 22 september 2026. Voor later gemerged werk bestaat nog geen bijbehorende projectupdate. Vertalingen veranderen historische bronregistraties niet.",
+        "timeline.note": "Projectupdates documenteren vastgelegde mijlpalen. Vertalingen veranderen historische bronregistraties niet.",
         "timeline.loading": "Projectupdates laden…",
+        "timeline.count": "{count} projectupdates geladen.",
         "timeline.empty": "Er zijn nog geen projectupdates beschikbaar.",
         "timeline.error": "De projecttijdlijn is momenteel niet beschikbaar.",
         "timeline.source": "Deze update wordt in het oorspronkelijke Engels getoond; een Nederlandse vertaling is nog niet beschikbaar.",
@@ -190,6 +192,7 @@ const statusLabels = {
     nl: { planned: 'Gepland', 'in-progress': 'In ontwikkeling', completed: 'Afgerond', cancelled: 'Geannuleerd', superseded: 'Vervangen' }
 };
 const timelineElement = document.getElementById('timeline');
+const timelineCountElement = document.getElementById('timeline-count');
 let language = 'en';
 let timelineUpdates = [];
 let timelineState = 'loading';
@@ -206,6 +209,11 @@ function createElement(tagName, className, text) {
 }
 
 function renderTimeline() {
+    // Count only successfully loaded entries; optional JSON count metadata is not authoritative.
+    timelineCountElement.hidden = timelineState !== 'ready';
+    timelineCountElement.textContent = timelineState === 'ready'
+        ? translate('timeline.count').replace('{count}', String(timelineUpdates.length))
+        : '';
     timelineElement.replaceChildren();
     timelineElement.setAttribute('aria-busy', String(timelineState === 'loading'));
     if (timelineState !== 'ready' || timelineUpdates.length === 0) {
