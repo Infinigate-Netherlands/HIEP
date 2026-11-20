@@ -3,16 +3,18 @@ name: Deploy HIEP Portal
 on:
   push:
     branches:
-      - main
+      - '**'
   pull_request:
-    branches:
-      - main
   workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Deploy the portal; requires separate publication authorization'
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -51,6 +53,32 @@ jobs:
               throw 'Timeline generation failed.'
           }
 
+  package:
+    name: Prepare explicitly requested Pages artifact
+    # A job-level guard also excludes upload-action preparation from normal CI.
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy == true && github.ref == 'refs/heads/main' && needs.build.result == 'success' }}
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout validated revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Generate project timeline
+        shell: pwsh
+        run: |
+          Import-Module ./src/HIEP.Tools/HIEP.Tools.psd1 -Force
+
+          New-HIEPProjectTimeline `
+              -Path . `
+              -OutputPath 'portal/data/timeline.json'
+
+          if (-not (Test-Path 'portal/data/timeline.json')) {
+              throw 'Timeline generation failed.'
+          }
+
       - name: Upload portal artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -58,9 +86,14 @@ jobs:
 
   deploy:
     name: Deploy GitHub Pages
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    needs: build
+    # Technical opt-in only: validation and this input do not grant clearance.
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy == true && github.ref == 'refs/heads/main' && needs.build.result == 'success' && needs.package.result == 'success' }}
+    needs: [build, package]
     runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
 
     environment:
       name: github-pages
